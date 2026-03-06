@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IRONFORGE — Palestra & Fitness</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --fire:    #e83030;
+  --fire-hi: #ff4444;
+  --ember:   #ff6b35;
+  --black:   #080808;
+  --dark:    #111111;
+  --carbon:  #181818;
+  --steel:   #242424;
+  --mid:     #555;
+  --silver:  #999;
+  --light:   #f2f2f0;
+  --white:   #ffffff;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Barlow',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ══ WA FLOAT ══ */
+.wa-float{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;
+  display:flex;align-items:center;gap:.6rem;background:#25D366;color:#fff;
+  padding:.8rem 1.4rem .8rem 1rem;border-radius:50px;text-decoration:none;
+  font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  box-shadow:0 8px 28px rgba(37,211,102,.4);transition:all .3s;animation:waPulse 3s ease infinite;}
+.wa-float:hover{background:#20b558;transform:translateY(-3px);animation:none;}
+.wa-float svg{width:22px;height:22px;flex-shrink:0;}
+@keyframes waPulse{0%,100%{box-shadow:0 8px 28px rgba(37,211,102,.4)}50%{box-shadow:0 8px 44px rgba(37,211,102,.65)}}
+@media(max-width:480px){.wa-float{padding:.8rem;border-radius:50%;}.wa-float span{display:none;}}
+
+/* ══ TOPBAR ══ */
+.topbar{background:var(--fire);padding:.55rem 5%;display:flex;justify-content:center;align-items:center;gap:2rem;overflow:hidden;}
+.topbar-item{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;
+  letter-spacing:.15em;text-transform:uppercase;color:#fff;white-space:nowrap;display:flex;align-items:center;gap:.4rem;}
+.topbar-sep{color:rgba(255,255,255,.3);}
+
+/* ══ NAV ══ */
+nav{position:sticky;top:0;z-index:300;background:rgba(8,8,8,.97);
+  backdrop-filter:blur(20px);border-bottom:2px solid var(--fire);
+  height:72px;padding:0 5%;display:flex;justify-content:space-between;align-items:center;}
+.nav-logo{display:flex;align-items:center;gap:.7rem;}
+.logo-icon{width:36px;height:36px;background:var(--fire);display:flex;align-items:center;
+  justify-content:center;font-size:1rem;font-weight:900;color:#fff;
+  font-family:'Bebas Neue',sans-serif;letter-spacing:.05em;clip-path:polygon(10% 0%,90% 0%,100% 10%,100% 90%,90% 100%,10% 100%,0% 90%,0% 10%);}
+.logo-text{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.08em;color:var(--white);line-height:1;}
+.logo-text span{color:var(--fire);}
+.logo-sub{font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:var(--silver);display:block;margin-top:.05rem;font-family:'Barlow Condensed',sans-serif;font-weight:500;}
+.nav-links{display:flex;gap:.1rem;list-style:none;align-items:center;}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,.5);font-family:'Barlow Condensed',sans-serif;
+  font-size:.88rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  padding:.45rem .9rem;transition:all .25s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:.9rem;right:.9rem;height:2px;background:var(--fire);transform:scaleX(0);transition:transform .3s;}
+.nav-links a:hover{color:var(--white);}
+.nav-links a:hover::after{transform:scaleX(1);}
+.btn-abbonati{background:var(--fire)!important;color:#fff!important;padding:.5rem 1.4rem!important;border-radius:2px!important;}
+.btn-abbonati:hover{background:var(--fire-hi)!important;}
+.btn-abbonati::after{display:none!important;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+.hamburger span{display:block;height:2px;background:var(--fire);transition:all .3s;}
+.hamburger span:nth-child(1){width:24px;}.hamburger span:nth-child(2){width:18px;}.hamburger span:nth-child(3){width:24px;}
+.mobile-menu{display:none;position:fixed;inset:0;background:var(--black);z-index:200;
+  flex-direction:column;justify-content:center;align-items:center;gap:1.5rem;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.1em;
+  text-decoration:none;color:rgba(255,255,255,.6);transition:color .3s;}
+.mobile-menu a:hover{color:var(--fire);}
+.mobile-close{position:absolute;top:1.5rem;right:5%;background:none;border:none;
+  color:var(--silver);font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;}
+
+/* ══ HERO ══ */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;z-index:0;
+  background:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&auto=format&fit=crop&q=85') center/cover no-repeat;
+  filter:brightness(.25) saturate(.5);}
+.hero-vignette{position:absolute;inset:0;z-index:1;
+  background:radial-gradient(ellipse at 60% 50%,transparent 20%,rgba(8,8,8,.7) 80%),
+             linear-gradient(to right,rgba(8,8,8,.9) 0%,rgba(8,8,8,.3) 60%,rgba(8,8,8,.1) 100%);}
+/* diagonal red slash */
+.hero-slash{position:absolute;top:0;right:0;bottom:0;z-index:2;pointer-events:none;
+  width:55%;background:linear-gradient(135deg,transparent 45%,rgba(232,48,48,.04) 45%);}
+/* grid */
+.hero-grid{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background-image:linear-gradient(rgba(232,48,48,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(232,48,48,.04) 1px,transparent 1px);
+  background-size:80px 80px;}
+.hero-content{position:relative;z-index:3;padding:0 6%;padding-top:72px;width:100%;max-width:1400px;margin:0 auto;}
+.hero-eyebrow{display:flex;align-items:center;gap:1rem;
+  font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--fire);margin-bottom:1.5rem;
+  animation:fadeUp .8s ease both;}
+.hero-eyebrow::before{content:'';width:32px;height:2px;background:var(--fire);}
+.hero h1{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(5rem,12vw,13rem);line-height:.9;
+  color:var(--white);letter-spacing:.03em;margin-bottom:.3rem;
+  animation:fadeUp .8s .1s ease both;}
+.hero h1 .outline{-webkit-text-stroke:2px var(--fire);color:transparent;display:block;}
+.hero h1 .solid{color:var(--fire);display:block;}
+.hero-sub{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1rem,2.5vw,1.6rem);
+  font-weight:400;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:2rem;
+  animation:fadeUp .8s .2s ease both;}
+.hero-desc{font-size:.98rem;font-weight:300;color:rgba(255,255,255,.5);
+  line-height:1.9;max-width:500px;margin-bottom:2.5rem;
+  animation:fadeUp .8s .3s ease both;}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .8s .4s ease both;}
+.btn-fire{background:var(--fire);color:#fff;padding:1rem 2.8rem;border:none;
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:.95rem;
+  letter-spacing:.14em;text-transform:uppercase;cursor:pointer;text-decoration:none;
+  display:inline-block;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  transition:all .3s;}
+.btn-fire:hover{background:var(--fire-hi);transform:translateY(-3px);box-shadow:0 14px 40px rgba(232,48,48,.45);}
+.btn-ghost-fire{background:transparent;color:rgba(255,255,255,.6);padding:1rem 2rem;
+  border:2px solid rgba(232,48,48,.4);font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;font-size:.95rem;letter-spacing:.14em;text-transform:uppercase;
+  cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s;}
+.btn-ghost-fire:hover{border-color:var(--fire);color:var(--fire);}
+.btn-wa-fire{display:inline-flex;align-items:center;gap:.6rem;background:#25D366;color:#fff;
+  padding:1rem 1.8rem;border:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:.95rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all .3s;}
+.btn-wa-fire svg{width:20px;height:20px;}
+.btn-wa-fire:hover{background:#20b558;transform:translateY(-3px);}
+/* hero stats bottom bar */
+.hero-stats{position:absolute;bottom:0;left:0;right:0;z-index:4;
+  background:rgba(8,8,8,.9);border-top:2px solid var(--fire);
+  display:flex;justify-content:space-around;padding:1.5rem 5%;flex-wrap:wrap;gap:1rem;}
+.hstat{text-align:center;}
+.hstat-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--fire);line-height:1;letter-spacing:.05em;}
+.hstat-lbl{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:.2rem;}
+
+/* ══ TICKER ══ */
+.ticker{background:var(--fire);padding:.7rem 0;overflow:hidden;}
+.ticker-track{display:inline-flex;gap:3rem;white-space:nowrap;animation:slide 22s linear infinite;}
+.ticker-track span{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.1em;
+  color:rgba(255,255,255,.75);}
+.ticker-track span::before{content:'◆  ';font-size:.5rem;vertical-align:middle;}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══ PROGRAMMI ══ */
+.programmi{padding:8rem 5%;max-width:1400px;margin:0 auto;}
+.sec-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--fire);
+  display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;}
+.sec-eyebrow::before{content:'';width:26px;height:2px;background:var(--fire);}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,6rem);
+  letter-spacing:.04em;line-height:.95;color:var(--white);margin-bottom:.6rem;}
+.sec-h span{color:var(--fire);}
+.sec-h.dark{color:var(--black);}
+.sec-h.dark span{color:var(--fire);}
+.sec-p{font-size:.95rem;font-weight:300;color:var(--silver);line-height:1.9;max-width:500px;margin-bottom:4rem;}
+
+.prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.prog-card{position:relative;overflow:hidden;border-radius:2px;cursor:pointer;group:true;}
+.prog-card img{width:100%;height:400px;object-fit:cover;display:block;
+  filter:brightness(.6) saturate(.7);transition:all .6s;}
+.prog-card:hover img{transform:scale(1.06);filter:brightness(.45) saturate(.9);}
+.prog-overlay{position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(8,8,8,.95) 0%,rgba(8,8,8,.3) 55%,transparent 80%);
+  transition:opacity .4s;}
+.prog-card:hover .prog-overlay{opacity:1;}
+.prog-body{position:absolute;bottom:0;left:0;right:0;padding:2rem;
+  transform:translateY(4px);transition:transform .4s;}
+.prog-card:hover .prog-body{transform:translateY(0);}
+.prog-tag{font-family:'Barlow Condensed',sans-serif;font-size:.62rem;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--fire);margin-bottom:.5rem;}
+.prog-name{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.05em;
+  color:var(--white);line-height:1;margin-bottom:.4rem;}
+.prog-desc{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.6;
+  opacity:0;transition:opacity .4s .05s;}
+.prog-card:hover .prog-desc{opacity:1;}
+.prog-level{display:inline-flex;align-items:center;gap:.4rem;margin-top:.8rem;
+  font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  opacity:0;transition:opacity .4s .1s;}
+.prog-card:hover .prog-level{opacity:1;}
+.prog-card-featured{border:2px solid var(--fire);}
+.prog-card-featured::after{content:'BESTSELLER';position:absolute;top:1.2rem;right:1.2rem;
+  background:var(--fire);color:#fff;font-family:'Barlow Condensed',sans-serif;
+  font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  padding:.25rem .7rem;z-index:3;}
+
+/* ══ PERCHÉ NOI ══ */
+.perche{background:var(--carbon);padding:7rem 5%;}
+.perche-inner{max-width:1400px;margin:0 auto;}
+.perche-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(232,48,48,.08);margin-top:4rem;}
+.p-box{background:var(--dark);padding:2.5rem 2rem;border-top:3px solid transparent;transition:border-color .35s;}
+.p-box:hover{border-top-color:var(--fire);}
+.p-big{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:rgba(232,48,48,.12);
+  line-height:1;letter-spacing:.05em;margin-bottom:.5rem;}
+.p-icon{font-size:1.8rem;display:block;margin-bottom:.8rem;}
+.p-box h3{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--white);margin-bottom:.5rem;}
+.p-box p{font-size:.84rem;font-weight:300;color:rgba(255,255,255,.4);line-height:1.8;}
+
+/* ══ TRAINER SECTION ══ */
+.trainers{padding:7rem 5%;max-width:1400px;margin:0 auto;}
+.trainer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:4rem;}
+.trainer-card{position:relative;overflow:hidden;}
+.trainer-card img{width:100%;height:380px;object-fit:cover;display:block;
+  filter:brightness(.7) saturate(.6) grayscale(.4);transition:all .5s;}
+.trainer-card:hover img{filter:brightness(.6) saturate(.8) grayscale(0);transform:scale(1.04);}
+.trainer-info{position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(8,8,8,.97) 0%,rgba(8,8,8,.3) 70%,transparent 100%);
+  padding:1.5rem 1.2rem;}
+.trainer-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.06em;
+  color:var(--white);line-height:1;margin-bottom:.2rem;}
+.trainer-spec{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--fire);}
+.trainer-exp{font-size:.78rem;color:rgba(255,255,255,.35);margin-top:.3rem;}
+
+/* ══ ABBONAMENTI ══ */
+.abbonamenti{background:linear-gradient(180deg,var(--black) 0%,var(--carbon) 100%);padding:8rem 5%;}
+.abbonamenti-inner{max-width:1300px;margin:0 auto;}
+.abb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem;}
+.abb-card{background:var(--steel);border:1px solid rgba(255,255,255,.06);
+  padding:2.5rem 2rem;position:relative;overflow:hidden;transition:all .35s;}
+.abb-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--steel);transition:background .3s;}
+.abb-card:hover{border-color:rgba(232,48,48,.35);transform:translateY(-6px);}
+.abb-card:hover::before{background:var(--fire);}
+.abb-card.featured{background:var(--fire);border-color:var(--fire);}
+.abb-card.featured::before{background:rgba(255,255,255,.3);}
+.abb-badge{position:absolute;top:-1px;right:2rem;background:var(--white);
+  color:var(--fire);font-family:'Barlow Condensed',sans-serif;font-size:.62rem;
+  font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .8rem;}
+.abb-name{font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.5rem;}
+.abb-card.featured .abb-name{color:rgba(255,255,255,.8);}
+.abb-price{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:var(--white);line-height:1;letter-spacing:.03em;}
+.abb-price sup{font-size:1.4rem;vertical-align:top;margin-top:.7rem;}
+.abb-per{font-size:.78rem;color:rgba(255,255,255,.4);margin-top:.2rem;}
+.abb-card.featured .abb-per{color:rgba(255,255,255,.65);}
+.abb-divider{height:1px;background:rgba(255,255,255,.08);margin:1.8rem 0;}
+.abb-card.featured .abb-divider{background:rgba(255,255,255,.25);}
+.abb-list{list-style:none;display:flex;flex-direction:column;gap:.7rem;}
+.abb-list li{font-size:.87rem;color:rgba(255,255,255,.55);display:flex;gap:.7rem;align-items:flex-start;}
+.abb-card.featured .abb-list li{color:rgba(255,255,255,.85);}
+.abb-list li::before{content:'●';color:var(--fire);font-size:.5rem;margin-top:.35rem;flex-shrink:0;}
+.abb-card.featured .abb-list li::before{color:#fff;}
+.btn-abb{display:block;text-align:center;margin-top:2rem;padding:.9rem;
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:.88rem;
+  letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .3s;}
+.btn-abb-outline{background:transparent;color:rgba(255,255,255,.5);border:2px solid rgba(255,255,255,.15);}
+.btn-abb-outline:hover{border-color:var(--fire);color:var(--fire);}
+.btn-abb-white{background:#fff;color:var(--fire);font-family:'Barlow Condensed',sans-serif;}
+.btn-abb-white:hover{background:var(--light);transform:translateY(-2px);}
+
+/* ══ GALLERIA ══ */
+.gallery{padding:5rem 0;background:var(--dark);overflow:hidden;}
+.gallery-label{text-align:center;font-family:'Barlow Condensed',sans-serif;
+  font-size:.72rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(232,48,48,.35);margin-bottom:1.8rem;}
+.gscroll{display:flex;gap:3px;padding:0 3%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;}
+.gscroll::-webkit-scrollbar{display:none;}
+.gitem{flex:0 0 clamp(220px,20vw,300px);height:clamp(200px,22vw,280px);overflow:hidden;scroll-snap-align:start;}
+.gitem img{width:100%;height:100%;object-fit:cover;display:block;
+  filter:brightness(.55) saturate(.5);transition:all .5s;}
+.gitem:hover img{filter:brightness(.85) saturate(1);transform:scale(1.06);}
+
+/* ══ ORARI ══ */
+.orari{padding:6rem 5%;background:var(--black);}
+.orari-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+.orari-table{margin-top:3rem;}
+.orari-row{display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.orari-row:last-child{border-bottom:none;}
+.orari-day{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);}
+.orari-time{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:600;
+  letter-spacing:.08em;color:var(--fire);}
+.orari-closed{color:var(--mid)!important;}
+
+/* form contatti */
+.contact-form{background:var(--carbon);padding:3rem;border-top:3px solid var(--fire);}
+.cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.cf-field{display:flex;flex-direction:column;gap:.4rem;}
+.cf-field.full{grid-column:1/-1;}
+.cf-field label{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.cf-field input,.cf-field select,.cf-field textarea{background:var(--steel);
+  border:1px solid rgba(255,255,255,.07);color:var(--white);padding:.8rem 1rem;
+  font-family:'Barlow',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;border-radius:0;}
+.cf-field input:focus,.cf-field select:focus,.cf-field textarea:focus{border-color:var(--fire);}
+.cf-field input::placeholder,.cf-field textarea::placeholder{color:rgba(255,255,255,.2);}
+.cf-field textarea{resize:vertical;min-height:90px;}
+.cf-field select option{background:var(--carbon);}
+.btn-cf{grid-column:1/-1;background:var(--fire);color:#fff;padding:1rem;border:none;
+  cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:.95rem;
+  letter-spacing:.14em;text-transform:uppercase;transition:all .3s;}
+.btn-cf:hover{background:var(--fire-hi);transform:translateY(-2px);box-shadow:0 10px 30px rgba(232,48,48,.4);}
+.btn-wa-contact{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:.7rem;
+  background:#25D366;color:#fff;padding:1rem;border:none;cursor:pointer;
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:.95rem;
+  letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .3s;}
+.btn-wa-contact svg{width:20px;height:20px;}
+.btn-wa-contact:hover{background:#20b558;transform:translateY(-2px);}
+.cf-or{grid-column:1/-1;text-align:center;font-family:'Barlow Condensed',sans-serif;
+  font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.2);display:flex;align-items:center;gap:1rem;}
+.cf-or::before,.cf-or::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08);}
+
+/* ══ FOOTER ══ */
+footer{background:var(--black);border-top:2px solid rgba(232,48,48,.2);padding:5rem 5% 2.5rem;}
+.footer-inner{max-width:1400px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;
+  padding-bottom:4rem;border-bottom:1px solid rgba(255,255,255,.05);margin-bottom:2.5rem;}
+.f-logo-main{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.08em;
+  color:var(--white);display:block;margin-bottom:.2rem;}
+.f-logo-main span{color:var(--fire);}
+.f-logo-sub{font-family:'Barlow Condensed',sans-serif;font-size:.55rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--silver);display:block;margin-bottom:1.2rem;}
+.f-brand p{font-size:.83rem;font-weight:300;color:rgba(255,255,255,.25);line-height:1.9;max-width:240px;}
+.f-col h4{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:1.2rem;}
+.f-col a{display:block;text-decoration:none;color:rgba(255,255,255,.38);
+  font-size:.87rem;font-weight:300;margin-bottom:.6rem;transition:color .25s;}
+.f-col a:hover{color:var(--fire);}
+.footer-bottom{max-width:1400px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.f-copy{font-size:.7rem;color:rgba(255,255,255,.15);}
+.f-socials{display:flex;gap:.6rem;}
+.f-socials a{width:32px;height:32px;border:1px solid rgba(232,48,48,.2);
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;font-size:.85rem;transition:all .3s;}
+.f-socials a:hover{border-color:var(--fire);background:rgba(232,48,48,.1);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1100px){.prog-grid{grid-template-columns:1fr 1fr;}.trainer-grid{grid-template-columns:1fr 1fr;}.abb-grid{grid-template-columns:1fr;max-width:380px;}.footer-inner{grid-template-columns:1fr 1fr;}}
+@media(max-width:900px){.perche-grid{grid-template-columns:1fr 1fr;}.orari-inner{grid-template-columns:1fr;gap:3rem;}.hero-stats{position:relative;margin-top:-1px;}}
+@media(max-width:768px){nav{padding:0 5%;}.nav-links{display:none;}.hamburger{display:flex;}.topbar-item:not(:first-child){display:none;}.topbar-sep{display:none;}.prog-grid{grid-template-columns:1fr;}.perche-grid{grid-template-columns:1fr 1fr;}.trainer-grid{grid-template-columns:1fr 1fr;}.cf-grid{grid-template-columns:1fr;}.cf-field.full{grid-column:1;}.btn-cf,.btn-wa-contact,.cf-or{grid-column:1;}.footer-inner{grid-template-columns:1fr 1fr;}}
+@media(max-width:540px){.hero h1{font-size:5rem;}.hero-actions{flex-direction:column;}.perche-grid{grid-template-columns:1fr;}.trainer-grid{grid-template-columns:1fr;}.footer-inner{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+
+<!-- WA FLOAT -->
+<a class="wa-float" href="https://wa.me/39333000000?text=Ciao!%20Vorrei%20informazioni%20sulla%20palestra" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.555 4.118 1.528 5.843L0 24l6.335-1.509A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.034-1.387l-.361-.214-3.741.981.998-3.648-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
+  <span>Scrivici su WhatsApp</span>
+</a>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <span class="topbar-item">🔥 Prima settimana GRATIS</span>
+  <span class="topbar-sep">|</span>
+  <span class="topbar-item">💪 Aperto 7 giorni su 7</span>
+  <span class="topbar-sep">|</span>
+  <span class="topbar-item">⚡ Nessun vincolo contrattuale</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-icon">IF</div>
+    <div>
+      <div class="logo-text">Iron<span>Forge</span></div>
+      <div class="logo-sub">Palestra & Fitness Center</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#programmi">Programmi</a></li>
+    <li><a href="#trainers">Trainer</a></li>
+    <li><a href="#abbonamenti">Abbonamenti</a></li>
+    <li><a href="#orari">Orari</a></li>
+    <li><a href="#abbonamenti" class="btn-abbonati">Abbonati</a></li>
+  </ul>
+  <button class="hamburger" onclick="document.querySelector('.mobile-menu').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu">
+  <button class="mobile-close" onclick="document.querySelector('.mobile-menu').classList.remove('open')">✕ Chiudi</button>
+  <a href="#programmi"   onclick="document.querySelector('.mobile-menu').classList.remove('open')">Programmi</a>
+  <a href="#trainers"    onclick="document.querySelector('.mobile-menu').classList.remove('open')">Trainer</a>
+  <a href="#abbonamenti" onclick="document.querySelector('.mobile-menu').classList.remove('open')">Abbonamenti</a>
+  <a href="#orari"       onclick="document.querySelector('.mobile-menu').classList.remove('open')">Orari</a>
+  <a href="https://wa.me/39333000000" target="_blank" style="color:#25D366;">WhatsApp</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-slash"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Milano · Palestra Premium dal 2010</div>
+    <h1>
+      <span class="outline">Forgia</span>
+      <span class="solid">Il tuo</span>
+      Corpo.
+    </h1>
+    <div class="hero-sub">Pesi liberi · Functional · Crossfit · Yoga · Spinning</div>
+    <p class="hero-desc">Attrezzature professionali, trainer certificati e un ambiente dove ogni giorno spingi oltre i tuoi limiti. Prima settimana gratuita, senza impegno.</p>
+    <div class="hero-actions">
+      <a href="#abbonamenti" class="btn-fire">Inizia gratis</a>
+      <a class="btn-wa-fire" href="https://wa.me/39333000000?text=Ciao!%20Vorrei%20informazioni%20sulla%20palestra%20IronForge" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.555 4.118 1.528 5.843L0 24l6.335-1.509A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.034-1.387l-.361-.214-3.741.981.998-3.648-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
+        WhatsApp
+      </a>
+      <a href="#programmi" class="btn-ghost-fire">Vedi i programmi</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-val">2.400+</div><div class="hstat-lbl">Iscritti attivi</div></div>
+    <div class="hstat"><div class="hstat-val">800m²</div><div class="hstat-lbl">Spazio allenamento</div></div>
+    <div class="hstat"><div class="hstat-val">30+</div><div class="hstat-lbl">Corsi settimanali</div></div>
+    <div class="hstat"><div class="hstat-val">14</div><div class="hstat-lbl">Trainer certificati</div></div>
+    <div class="hstat"><div class="hstat-val">5:30</div><div class="hstat-lbl">Apertura mattina</div></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Weightlifting</span><span>CrossFit</span><span>Functional Training</span>
+    <span>Yoga & Pilates</span><span>Spinning</span><span>Personal Training</span>
+    <span>Boxe & MMA</span><span>HIIT</span><span>Nutrizione Sportiva</span>
+    <span>Weightlifting</span><span>CrossFit</span><span>Functional Training</span>
+    <span>Yoga & Pilates</span><span>Spinning</span><span>Personal Training</span>
+    <span>Boxe & MMA</span><span>HIIT</span><span>Nutrizione Sportiva</span>
+  </div>
+</div>
+
+<!-- PROGRAMMI -->
+<section class="programmi" id="programmi">
+  <div class="sec-eyebrow">I nostri programmi</div>
+  <h2 class="sec-h">Allena ogni<br><span>Muscolo.</span></h2>
+  <p class="sec-p">Dai pesi liberi al functional training, dallo yoga alla boxe. Ogni programma è progettato per portarti al prossimo livello.</p>
+  <div class="prog-grid">
+    <div class="prog-card prog-card-featured">
+      <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&auto=format&fit=crop&q=80" alt="Weightlifting" loading="lazy">
+      <div class="prog-overlay"></div>
+      <div class="prog-body">
+        <div class="prog-tag">🏋️ Sala Pesi</div>
+        <div class="prog-name">Weightlifting & Bodybuilding</div>
+        <div class="prog-desc">Pesi liberi, macchine isotoniche e power rack. Area dedicata 300m² con tutto il necessario per il tuo sviluppo muscolare.</div>
+        <div class="prog-level" style="color:var(--fire);">● Tutti i livelli · Accesso libero</div>
+      </div>
+    </div>
+    <div class="prog-card">
+      <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=700&auto=format&fit=crop&q=80" alt="CrossFit" loading="lazy">
+      <div class="prog-overlay"></div>
+      <div class="prog-body">
+        <div class="prog-tag">⚡ CrossFit</div>
+        <div class="prog-name">CrossFit & Functional</div>
+        <div class="prog-desc">Allenamento ad alta intensità, WOD giornalieri e coach certificati. Per chi vuole spingersi davvero oltre.</div>
+        <div class="prog-level" style="color:#ff9900;">● Intermedio / Avanzato</div>
+      </div>
+    </div>
+    <div class="prog-card">
+      <img src="https://images.unsplash.com/photo-1549576490-b0b4831ef60a?w=700&auto=format&fit=crop&q=80" alt="Yoga" loading="lazy">
+      <div class="prog-overlay"></div>
+      <div class="prog-body">
+        <div class="prog-tag">🧘 Mente & Corpo</div>
+        <div class="prog-name">Yoga, Pilates & Stretching</div>
+        <div class="prog-desc">Flessibilità, core stability e recupero muscolare. Classi guidate 7 giorni su 7 in sala dedicata.</div>
+        <div class="prog-level" style="color:#4fc3f7;">● Tutti i livelli · Classi guidate</div>
+      </div>
+    </div>
+    <div class="prog-card">
+      <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=700&auto=format&fit=crop&q=80" alt="Spinning" loading="lazy">
+      <div class="prog-overlay"></div>
+      <div class="prog-body">
+        <div class="prog-tag">🚴 Cardio</div>
+        <div class="prog-name">Spinning & Cardio Zone</div>
+        <div class="prog-desc">30 bici da spinning con istruttore live, tapis roulant e zone cardio con macchine premium Life Fitness.</div>
+        <div class="prog-level" style="color:#81c784;">● Principiante / Intermedio</div>
+      </div>
+    </div>
+    <div class="prog-card">
+      <img src="https://images.unsplash.com/photo-1566351557863-467d4f4a5c84?w=700&auto=format&fit=crop&q=80" alt="Boxe" loading="lazy">
+      <div class="prog-overlay"></div>
+      <div class="prog-body">
+        <div class="prog-tag">🥊 Combat Sports</div>
+        <div class="prog-name">Boxe & MMA</div>
+        <div class="prog-desc">Ring professionale, sacco e guantoni. Corsi di boxe, kickboxing e MMA con campioni nazionali.</div>
+        <div class="prog-level" style="color:var(--fire);">● Tutti i livelli · Max 8 p.</div>
+      </div>
+    </div>
+    <div class="prog-card">
+      <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=700&auto=format&fit=crop&q=80" alt="Personal Training" loading="lazy">
+      <div class="prog-overlay"></div>
+      <div class="prog-body">
+        <div class="prog-tag">👤 Personale</div>
+        <div class="prog-name">Personal Training</div>
+        <div class="prog-desc">Scheda personalizzata, supporto nutrizionale e sessioni 1-to-1 con il tuo trainer dedicato.</div>
+        <div class="prog-level" style="color:var(--fire);">● Su prenotazione · Tutti i livelli</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERCHÉ NOI -->
+<section class="perche">
+  <div class="perche-inner">
+    <div class="sec-eyebrow">Perché IronForge</div>
+    <h2 class="sec-h">Nessun compromesso,<br><span>Solo risultati.</span></h2>
+    <div class="perche-grid">
+      <div class="p-box"><div class="p-big">01</div><span class="p-icon">🏋️</span><h3>Attrezzature Top</h3><p>Macchine Life Fitness, Hammer Strength e Concept2. Aggiornate ogni 3 anni. Mai in attesa per una macchina.</p></div>
+      <div class="p-box"><div class="p-big">02</div><span class="p-icon">👨‍🏫</span><h3>Trainer Certificati</h3><p>14 personal trainer con certificazioni ISSA, CONI e ACSM. Sempre disponibili, mai distratti dal telefono.</p></div>
+      <div class="p-box"><div class="p-big">03</div><span class="p-icon">🌅</span><h3>Aperto Sempre</h3><p>Dal lunedì alla domenica, dalle 5:30 alle 23:30. Perché il tuo allenamento non ha orari fissi.</p></div>
+      <div class="p-box"><div class="p-big">04</div><span class="p-icon">📱</span><h3>App IronForge</h3><p>Prenota classi, traccia i tuoi progressi, segui le schede e ricevi feedback dal trainer. Tutto dal telefono.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAINERS -->
+<section class="trainers" id="trainers">
+  <div class="sec-eyebrow">Il nostro team</div>
+  <h2 class="sec-h">I tuoi <span>Trainer.</span></h2>
+  <p class="sec-p">14 professionisti certificati pronti a guidarti verso i tuoi obiettivi. Ognuno specializzato nella propria disciplina.</p>
+  <div class="trainer-grid">
+    <div class="trainer-card">
+      <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=500&auto=format&fit=crop&q=80" alt="Marco" loading="lazy">
+      <div class="trainer-info">
+        <div class="trainer-name">Marco Ferretti</div>
+        <div class="trainer-spec">Bodybuilding & Powerlifting</div>
+        <div class="trainer-exp">12 anni di esperienza · ISSA Certified</div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&auto=format&fit=crop&q=80" alt="Sara" loading="lazy">
+      <div class="trainer-info">
+        <div class="trainer-name">Sara Conti</div>
+        <div class="trainer-spec">CrossFit & HIIT</div>
+        <div class="trainer-exp">8 anni · CrossFit Level 2 Trainer</div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=500&auto=format&fit=crop&q=80" alt="Luca" loading="lazy">
+      <div class="trainer-info">
+        <div class="trainer-name">Luca Marino</div>
+        <div class="trainer-spec">Boxe & MMA</div>
+        <div class="trainer-exp">Ex campione regionale · 10 anni</div>
+      </div>
+    </div>
+    <div class="trainer-card">
+      <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&auto=format&fit=crop&q=80" alt="Elena" loading="lazy">
+      <div class="trainer-info">
+        <div class="trainer-name">Elena Russo</div>
+        <div class="trainer-spec">Yoga & Pilates</div>
+        <div class="trainer-exp">RYT 500 · 9 anni · Mindfulness Coach</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABBONAMENTI -->
+<section class="abbonamenti" id="abbonamenti">
+  <div class="abbonamenti-inner">
+    <div class="sec-eyebrow">Scegli il tuo piano</div>
+    <h2 class="sec-h">Abbonamenti<br><span>Senza vincoli.</span></h2>
+    <div class="abb-grid">
+      <div class="abb-card">
+        <div class="abb-name">Start</div>
+        <div class="abb-price"><sup>€</sup>39</div>
+        <div class="abb-per">al mese · disdici quando vuoi</div>
+        <div class="abb-divider"></div>
+        <ul class="abb-list">
+          <li>Accesso sala pesi</li>
+          <li>Area cardio inclusa</li>
+          <li>Spogliatoi e docce</li>
+          <li>Lun–Ven · 7:00–21:00</li>
+          <li>1 lezione di prova inclusa</li>
+        </ul>
+        <a href="#orari" class="btn-abb btn-abb-outline">Inizia ora</a>
+      </div>
+      <div class="abb-card featured">
+        <span class="abb-badge">Più scelto</span>
+        <div class="abb-name">Pro</div>
+        <div class="abb-price"><sup>€</sup>59</div>
+        <div class="abb-per">al mese · disdici quando vuoi</div>
+        <div class="abb-divider"></div>
+        <ul class="abb-list">
+          <li>Tutto di Start incluso</li>
+          <li>Accesso illimitato 7 giorni</li>
+          <li>Corsi di gruppo inclusi</li>
+          <li>App IronForge premium</li>
+          <li>Scheda personalizzata</li>
+          <li>1 sessione PT / mese gratis</li>
+        </ul>
+        <button class="btn-abb btn-abb-white" onclick="window.location='#orari'">Abbonati Pro</button>
+      </div>
+      <div class="abb-card">
+        <div class="abb-name">Elite</div>
+        <div class="abb-price"><sup>€</sup>99</div>
+        <div class="abb-per">al mese · disdici quando vuoi</div>
+        <div class="abb-divider"></div>
+        <ul class="abb-list">
+          <li>Tutto di Pro incluso</li>
+          <li>4 sessioni PT / mese</li>
+          <li>Piano nutrizionale</li>
+          <li>Accesso VIP area recovery</li>
+          <li>Massaggi sportivi inclusi</li>
+          <li>Guest pass x2 / mese</li>
+        </ul>
+        <a href="#orari" class="btn-abb btn-abb-outline">Abbonati Elite</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="gallery">
+  <div class="gallery-label">— La nostra palestra —</div>
+  <div class="gscroll">
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&auto=format&fit=crop&q=75" alt="" loading="lazy"></div>
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&auto=format&fit=crop&q=75" alt="" loading="lazy"></div>
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=400&auto=format&fit=crop&q=75" alt="" loading="lazy"></div>
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1549576490-b0b4831ef60a?w=400&auto=format&fit=crop&q=75" alt="" loading="lazy"></div>
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1558611848-73f7eb4001a1?w=400&auto=format&fit=crop&q=75" alt="" loading="lazy"></div>
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&auto=format&fit=crop&q=75" alt="" loading="lazy"></div>
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1566351557863-467d4f4a5c84?w=400&auto=format&fit=crop&q=75" alt="" loading="lazy"></div>
+  </div>
+</div>
+
+<!-- ORARI + FORM -->
+<section class="orari" id="orari">
+  <div class="orari-inner">
+    <div>
+      <div class="sec-eyebrow">Quando vieni?</div>
+      <h2 class="sec-h">Orari<br><span>Apertura.</span></h2>
+      <div class="orari-table">
+        <div class="orari-row"><span class="orari-day">Lunedì – Venerdì</span><span class="orari-time">05:30 – 23:30</span></div>
+        <div class="orari-row"><span class="orari-day">Sabato</span><span class="orari-time">07:00 – 22:00</span></div>
+        <div class="orari-row"><span class="orari-day">Domenica</span><span class="orari-time">08:00 – 20:00</span></div>
+        <div class="orari-row"><span class="orari-day">Festivi</span><span class="orari-time orari-closed">09:00 – 14:00</span></div>
+      </div>
+      <div style="margin-top:2rem;padding:1.5rem;background:var(--carbon);border-left:3px solid var(--fire);">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--fire);margin-bottom:.5rem;">📍 Dove siamo</div>
+        <div style="font-size:.9rem;color:rgba(255,255,255,.5);line-height:1.8;">Via dello Sport 42 · 20124 Milano<br>MM2 · Caiazzo — 4 min a piedi<br><a href="#" style="color:var(--fire);text-decoration:none;">Apri su Google Maps →</a></div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="sec-eyebrow" style="margin-bottom:1rem;">Contattaci</div>
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.05em;color:var(--white);margin-bottom:2rem;">Prova 1 settimana <span style="color:var(--fire);">gratis.</span></h3>
+      <div class="cf-grid">
+        <div class="cf-field"><label>Nome</label><input type="text" placeholder="Mario Rossi"></div>
+        <div class="cf-field"><label>Telefono</label><input type="tel" placeholder="+39 333 000 0000"></div>
+        <div class="cf-field full"><label>Obiettivo</label>
+          <select><option disabled selected>Cosa vuoi raggiungere?</option>
+            <option>Perdere peso</option><option>Aumentare massa muscolare</option>
+            <option>Migliorare forma fisica</option><option>Prepararsi a una gara</option>
+            <option>Ridurre stress</option><option>Altro</option>
+          </select>
+        </div>
+        <div class="cf-field full"><label>Messaggio (facoltativo)</label><textarea placeholder="Raccontaci il tuo obiettivo o fai una domanda..."></textarea></div>
+        <div class="cf-or">oppure</div>
+        <a class="btn-wa-contact" href="https://wa.me/39333000000?text=Ciao!%20Vorrei%20provare%20una%20settimana%20gratis%20a%20IronForge" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.555 4.118 1.528 5.843L0 24l6.335-1.509A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.034-1.387l-.361-.214-3.741.981.998-3.648-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
+          Scrivici su WhatsApp
+        </a>
+        <button class="btn-cf" onclick="alert('Richiesta inviata! 💪 Ti contatteremo per fissare la tua prova gratuita.')">Prenota settimana gratuita</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="f-brand">
+      <span class="f-logo-main">Iron<span>Forge</span></span>
+      <span class="f-logo-sub">Palestra & Fitness Center · Milano dal 2010</span>
+      <p>Forgiamo corpi e menti. Una palestra seria, un ambiente motivante, risultati concreti.</p>
+    </div>
+    <div class="f-col"><h4>Programmi</h4>
+      <a href="#">Sala Pesi</a><a href="#">CrossFit</a>
+      <a href="#">Yoga & Pilates</a><a href="#">Spinning</a>
+      <a href="#">Boxe & MMA</a><a href="#">Personal Training</a>
+    </div>
+    <div class="f-col"><h4>Palestra</h4>
+      <a href="#">Chi siamo</a><a href="#">I nostri trainer</a>
+      <a href="#">Abbonamenti</a><a href="#">App IronForge</a>
+    </div>
+    <div class="f-col"><h4>Contatti</h4>
+      <a href="tel:+390212345678">02 1234 5678</a>
+      <a href="https://wa.me/39333000000" target="_blank">WhatsApp</a>
+      <a href="mailto:info@ironforge.it">info@ironforge.it</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="f-copy">© 2025 IronForge Fitness Srl — P.IVA 12345678901 — Via dello Sport 42, Milano</span>
+    <div class="f-socials">
+      <a href="#" title="Instagram">📷</a>
+      <a href="#" title="TikTok">🎵</a>
+      <a href="#" title="YouTube">▶️</a>
+      <a href="https://wa.me/39333000000" target="_blank" title="WhatsApp">💬</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
